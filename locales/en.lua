@@ -39,6 +39,9 @@ Translations = Translations or {
         firstname = "First Name",
         lastname = "Last Name",
         nationality = "Nationality",
+        city = "City",
+        postcode = "Postal Code",
+        description = "Description",
         gender = "Gender",
         birthdate = "Birthdate",
         job = "Job",
@@ -70,8 +73,3 @@ Translations = Translations or {
         forgotten_field = "It seems like you have forgotten to input one or multiple of the fields!"
     }
 }
-
-Lang = Lang or Locale:new({
-    phrases = Translations,
-    warnOnMissing = true
-})

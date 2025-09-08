@@ -1,10 +1,10 @@
-local QBCore = exports['qbx-core']:GetCoreObject()
+local QBCore = exports['qbx_core']
 local hasDonePreloading = {}
 
 local function GiveStarterItems(source)
-    local Player = QBCore.Functions.GetPlayer(source)
+    local Player = QBCore.GetPlayer(source)
 
-    for _, v in pairs(QBCore.Shared.StarterItems) do
+    for _, v in pairs(exports.ox_inventory:Items()) do
         if v.item == 'id_card' then
             local metadata = {
                 type = string.format('%s %s', Player.PlayerData.charinfo.firstname, Player.PlayerData.charinfo.lastname),
@@ -40,7 +40,7 @@ lib.addCommand('deletechar', {
         { name = 'id', help = 'Player ID', type = 'number' },
     }
 }, function(source, args)
-    local Player = QBCore.Functions.GetPlayer(args.id)
+    local Player = QBCore.GetPlayer(args.id)
 
     if not Player then return end
     local CID = Player.PlayerData.citizenid
@@ -71,7 +71,7 @@ RegisterNetEvent('qb-multicharacter:server:loadUserData', function(cData)
             TriggerClientEvent('qb-spawn:client:setupSpawns', src, cData)
             TriggerClientEvent('qb-spawn:client:openUI', src, true)
         end
-        TriggerEvent("qb-log:server:CreateLog", "joinleave", "Loaded", "green", "**".. GetPlayerName(src) .. "** ("..(QBCore.Functions.GetIdentifier(src, 'discord') or 'undefined') .." |  ||"  ..(QBCore.Functions.GetIdentifier(src, 'ip') or 'undefined') ..  "|| | " ..(QBCore.Functions.GetIdentifier(src, 'license') or 'undefined') .." | " ..cData.citizenid.." | "..src..") loaded..")
+        TriggerEvent("qb-log:server:CreateLog", "joinleave", "Loaded", "green", "**".. GetPlayerName(src) .. "** ("..(QBCore.GetIdentifier(src, 'discord') or 'undefined') .." |  ||"  ..(QBCore.GetIdentifier(src, 'ip') or 'undefined') ..  "|| | " ..(QBCore.GetIdentifier(src, 'license') or 'undefined') .." | " ..cData.citizenid.." | "..src..") loaded..")
         SetPlayerRoutingBucket(src, 0)
     end
 end)
@@ -110,7 +110,7 @@ RegisterNetEvent('qb-multicharacter:server:deleteCharacter', function(citizenid)
 end)
 
 lib.callback.register('qb-multicharacter:callback:GetNumberOfCharacters', function(source)
-    local License = QBCore.Functions.GetIdentifier(source, 'license2')
+    local License = QBCore.GetIdentifier(source, 'license2')
     if Config.PlayersNumberOfCharacters[License] then
         return Config.PlayersNumberOfCharacters[License]
     else
@@ -120,7 +120,7 @@ end)
 
 lib.callback.register('qb-multicharacter:callback:GetCurrentCharacters', function(source)
     local Characters = {}
-    local Result = MySQL.query.await('SELECT * FROM players WHERE license = ? OR license = ?', {QBCore.Functions.GetIdentifier(source, 'license2'), QBCore.Functions.GetIdentifier(source, 'license')})
+    local Result = MySQL.query.await('SELECT * FROM players WHERE license = ? OR license = ?', {QBCore.GetIdentifier(source, 'license2'), QBCore.GetIdentifier(source, 'license')})
     for i = 1, #Result do
         Result[i].charinfo = json.decode(Result[i].charinfo)
         Result[i].money = json.decode(Result[i].money)
