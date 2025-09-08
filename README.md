@@ -15,6 +15,7 @@ Soon
 ## Features
 - Ability to create up to 5 characters and delete any character.
 - Ability to see character information during selection.
+- Support for city, postal code and character descriptions during creation.
 
 ## Installation
 ### Manual

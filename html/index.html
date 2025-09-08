@@ -84,6 +84,18 @@
                                 <td>{{translations.nationality}}:</td>
                                 <td>{{characters[selectedCharacter].charinfo.nationality}}</td>
                             </tr>
+                            <tr v-if="characters[selectedCharacter].charinfo.city">
+                                <td>{{translations.city}}:</td>
+                                <td>{{characters[selectedCharacter].charinfo.city}}</td>
+                            </tr>
+                            <tr v-if="characters[selectedCharacter].charinfo.postcode">
+                                <td>{{translations.postcode}}:</td>
+                                <td>{{characters[selectedCharacter].charinfo.postcode}}</td>
+                            </tr>
+                            <tr v-if="characters[selectedCharacter].charinfo.description">
+                                <td>{{translations.description}}:</td>
+                                <td>{{characters[selectedCharacter].charinfo.description}}</td>
+                            </tr>
                             <tr>
                                 <td>{{translations.job}}:</td>
                                 <td>{{characters[selectedCharacter].job.label}}</td>
@@ -141,6 +153,22 @@
                                 v-model="registerData.nationality"
                                 :disabled="!show.register"
                             ></v-text-field>
+                            <v-text-field
+                                :placeholder="translations.city"
+                                solo
+                                hide-details="auto"
+                                background-color="#141517f2"
+                                v-model="registerData.city"
+                                :disabled="!show.register"
+                            ></v-text-field>
+                            <v-text-field
+                                :placeholder="translations.postcode"
+                                solo
+                                hide-details="auto"
+                                background-color="#141517f2"
+                                v-model="registerData.postcode"
+                                :disabled="!show.register"
+                            ></v-text-field>
                             <v-select
                                 solo
                                 :placeholder="translations.gender"
@@ -195,6 +223,15 @@
                                     </v-btn>
                                 </v-date-picker>
                             </v-dialog>
+                            <v-textarea
+                                :placeholder="translations.description"
+                                solo
+                                hide-details="auto"
+                                background-color="#141517f2"
+                                auto-grow
+                                v-model="registerData.description"
+                                :disabled="!show.register"
+                            ></v-textarea>
                         </div>
                         <v-btn :disabled="!show.register" class="character-reg-btn" color="#27AE60" v-ripple @click="create_character" large>{{translations.create_button}}</v-btn>
                     </div>
@@ -238,7 +275,10 @@
                     firstname: undefined,
                     lastname: undefined,
                     nationality: undefined,
-                    gender: undefined
+                    gender: undefined,
+                    city: undefined,
+                    postcode: undefined,
+                    description: undefined
                 },
                 allowDelete: false,
                 dataPickerMenu: false,
@@ -306,9 +346,9 @@
 
                 create_character: async function() {
                     const registerData = viewmodel.registerData
-                    var profanityTest = (!regTest.test(registerData.firstname) && !regTest.test(registerData.nationality) && !regTest.test(registerData.lastname))
+                    var profanityTest = (!regTest.test(registerData.firstname) && !regTest.test(registerData.nationality) && !regTest.test(registerData.lastname) && !regTest.test(registerData.city))
 
-                    if (profanityTest && registerData.firstname !== undefined && registerData.firstname !== "" && registerData.lastname !== undefined && registerData.lastname !== "" && registerData.gender !== undefined && registerData.nationality !== undefined && registerData.nationality !== "" && registerData.date !== undefined) {
+                    if (profanityTest && registerData.firstname !== undefined && registerData.firstname !== "" && registerData.lastname !== undefined && registerData.lastname !== "" && registerData.gender !== undefined && registerData.nationality !== undefined && registerData.nationality !== "" && registerData.city !== undefined && registerData.city !== "" && registerData.postcode !== undefined && registerData.postcode !== "" && registerData.description !== undefined && registerData.description !== "" && registerData.date !== undefined) {
                         viewmodel.show.register = false
 
                         await fetch(`https://${GetParentResourceName()}/createNewCharacter`, {
@@ -317,6 +357,9 @@
                                 firstname: registerData.firstname,
                                 lastname: registerData.lastname,
                                 nationality: registerData.nationality,
+                                city: registerData.city,
+                                postcode: registerData.postcode,
+                                description: registerData.description,
                                 birthdate: registerData.date,
                                 gender: registerData.gender,
                                 cid: viewmodel.selectedCharacter,
