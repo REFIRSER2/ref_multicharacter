@@ -13,14 +13,15 @@
     z-index: 100;
 }
 
+
 .characters-list {
     position: absolute;
-    min-width: 26%;
+    min-width: 20%;
     width: fit-content;
     min-height: 50%;
     height: fit-content;
     max-height: 70%;
-    left: 14%;
+    left: 5%;
     top: 20%;
     background-color: #141517f2;
     border-radius: 5px;
@@ -114,6 +115,20 @@
     padding-left: 10px;
 }
 
+.character.empty {
+    justify-content: center;
+}
+
+.character.empty .slot-name {
+    flex: 0 0 auto;
+    padding-left: 0;
+}
+
+.character.empty .slot-name .material-symbols-outlined {
+    font-size: 3vh;
+    color: #ededed;
+}
+
 .character-btns {
     margin-top: 25px;
 }
@@ -146,15 +161,16 @@
     box-shadow: rgb(17 17 37 / 25%) 0px 30px 60px -12px inset, rgb(54 80 154 / 30%) 0px 18px 36px -18px;
 }
 
+
 .character-info {
-    min-width: 22.5%;
+    min-width: 20%;
     width: fit-content;
-    max-width: 27.5%;
+    max-width: 23%;
     min-height: 50%;
     height: fit-content;
 
     position: absolute;
-    right: 14%;
+    right: 5%;
     top: 20%;
     padding: 30px;
     background-color: #141517f2;

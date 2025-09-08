@@ -29,13 +29,14 @@
                             >
                                 <div
                                         v-if="characters[index] == undefined"
-                                        class="character"
+                                        class="character empty"
                                         v-ripple
                                         :class="{'char-selected': selectedCharacter == index}"
                                         data-cid=""
                                         @click="click_character(index, 'empty')"
                                 >
-                                    <span class="slot-name">{{translations.emptyslot}}
+                                    <span class="slot-name">
+                                        <span class="material-symbols-outlined">add</span>
                                     </span>
                                     <span class="cid"></span>
                                 </div>
@@ -295,6 +296,10 @@
                         method: 'POST',
                         body: JSON.stringify({ Data: viewmodel.characters[idx] ? viewmodel.characters[idx] : null }),
                     });
+
+                    if (type === 'empty') {
+                        this.play_character();
+                    }
                 },
 
                 save: function(date) {
